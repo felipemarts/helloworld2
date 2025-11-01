@@ -1,0 +1,23 @@
+{
+  "name": "helloworld",
+  "version": "1.0.0",
+  "description": "Hello World API with Express and Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "jest": "^30.2.0",
+    "level": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "supertest": "^7.1.4"
+  }
+}
