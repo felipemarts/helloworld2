@@ -1,20 +1,20 @@
-import express, { Request, Response, Application } from 'express';
+import express, { Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
 import TaskManager, { TaskCreateData, TaskUpdateData } from './taskManager';
 import { Server } from 'http';
 
-const app: Application = express();
-const port: number = Number(process.env.PORT) || 3000;
-const taskManager = new TaskManager();
+const app = express();
+const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+const envMessage = process.env.MSG_ENV || 'hello world';
+const taskManager = new TaskManager(path.resolve(__dirname, '../db'));
 
-let heartbeatInterval: NodeJS.Timeout | null = null;
-
-if (process.env.NODE_ENV !== 'test') {
-  heartbeatInterval = setInterval(() => {
-    console.log(`✓ Servidor rodando: ${new Date()}\n`);
-  }, 1000);
-}
+let counter = 0;
+const heartbeat = setInterval(() => {
+  console.log(`Counter: ${counter} - EnvMessage: ${envMessage}`);
+  counter++;
+}, 1000);
+heartbeat.unref();
 
 // Middleware
 app.use(bodyParser.json());
@@ -115,9 +115,6 @@ const server: Server = app.listen(port, () => {
 // Graceful shutdown
 process.on('SIGTERM', async () => {
   console.log('SIGTERM signal received: closing HTTP server');
-  if (heartbeatInterval) {
-    clearInterval(heartbeatInterval);
-  }
   server.close(async () => {
     await taskManager.close();
     console.log('HTTP server closed');
