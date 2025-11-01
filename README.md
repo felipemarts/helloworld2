@@ -1,33 +1,57 @@
-# Task List Application
+# Task Manager API - TypeScript
 
-Uma aplicação completa de lista de tarefas (To-Do List) construída com Node.js, Express, LevelDB e Jest.
+Uma API de gerenciamento de tarefas moderna construída com Node.js, Express e TypeScript.
 
-## Funcionalidades
+## 🚀 Tecnologias
 
-- ✅ CRUD completo de tarefas (Criar, Ler, Atualizar, Deletar)
-- 💾 Persistência local com LevelDB
-- 🎨 Interface web responsiva em HTML/CSS/JavaScript
-- ✅ Testes automatizados com Jest
-- 🚀 API RESTful
+- **Node.js** - Runtime JavaScript
+- **TypeScript** - Tipagem estática  
+- **Express** - Framework web
+- **LevelDB** - Banco de dados NoSQL 
+- **Jest + ts-jest** - Framework de testes
+- **Supertest** - Testes de integração da API
 
-## Tecnologias
+## 📁 Estrutura do Projeto
 
-- **Backend**: Node.js, Express.js
-- **Banco de Dados**: LevelDB (persistência local)
-- **Frontend**: HTML5, CSS3, JavaScript vanilla
-- **Testes**: Jest, Supertest
+```
+├── index.ts             # Servidor principal
+├── taskManager.ts       # Gerenciador de tarefas  
+├── dist/                # Arquivos JavaScript compilados
+├── public/              # Arquivos estáticos (frontend)
+├── *.test.ts            # Arquivos de teste TypeScript
+└── package.json         # Configurações e dependências
+```
 
-## Instalação
+## 🛠️ Instalação
 
+1. Clone o repositório e instale as dependências:
 ```bash
-cd server
 npm install
 ```
 
-## Executando a Aplicação
-
+2. Compile o TypeScript:
 ```bash
-cd server
+npm run build
+```
+
+## 🎯 Scripts Disponíveis
+
+- `npm run build` - Compila o código TypeScript para JavaScript
+- `npm run dev` - Executa o servidor em modo desenvolvimento (ts-node)
+- `npm start` - Executa o servidor compilado (produção)
+- `npm test` - Executa todos os testes
+- `npm run clean` - Remove arquivos compilados
+
+## 🔥 Executando a Aplicação
+
+### Desenvolvimento (com TypeScript direto)
+```bash
+npm run dev
+```
+
+### Produção (código compilado)
+```bash
+npm run build
 npm start
 ```
 
@@ -36,7 +60,6 @@ A aplicação estará disponível em `http://localhost:3000`
 ## Executando os Testes
 
 ```bash
-cd server
 npm test
 ```
 

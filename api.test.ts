@@ -1,26 +1,41 @@
-const request = require('supertest');
-const fs = require('fs');
+import request from 'supertest';
+import * as fs from 'fs';
+import { Application } from 'express';
+import TaskManager from './taskManager';
 
 describe('Task API Endpoints', () => {
-  let app;
-  let taskManager;
-  let server;
+  let app: Application;
+  let taskManager: TaskManager;
 
-  beforeAll(() => {
-    // Import after ensuring clean state
+  beforeAll(async () => {
+    // Set test environment
+    process.env.NODE_ENV = 'test';
+    
+    // Import after setting environment
     const indexModule = require('./index');
     app = indexModule.app;
     taskManager = indexModule.taskManager;
+    
+    // Wait for initialization
+    await new Promise(resolve => setTimeout(resolve, 100));
   });
 
   beforeEach(async () => {
     // Clear all tasks before each test
-    await taskManager.clearAll();
+    try {
+      await taskManager.clearAll();
+    } catch (error) {
+      // Ignore clear errors if database is not open
+    }
   });
 
   afterAll(async () => {
     // Clean up
-    await taskManager.close();
+    try {
+      await taskManager.close();
+    } catch (error) {
+      // Ignore close errors
+    }
     
     // Remove test database directory
     const dbPath = './db';

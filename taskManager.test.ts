@@ -1,11 +1,10 @@
-const TaskManager = require('./taskManager');
-const fs = require('fs');
-const path = require('path');
+import TaskManager from './taskManager';
+import * as fs from 'fs';
 
 const TEST_DB_PATH = './test-db';
 
 describe('TaskManager', () => {
-  let taskManager;
+  let taskManager: TaskManager;
 
   beforeEach(async () => {
     // Create a new TaskManager instance for each test
@@ -92,7 +91,7 @@ describe('TaskManager', () => {
       const task = await taskManager.createTask('Original Title');
       const updated = await taskManager.updateTask(task.id, { title: 'Updated Title' });
       
-      expect(updated.title).toBe('Updated Title');
+      expect(updated!.title).toBe('Updated Title');
       expect(updated).toHaveProperty('updatedAt');
     });
 
@@ -100,14 +99,14 @@ describe('TaskManager', () => {
       const task = await taskManager.createTask('Task', 'Original Description');
       const updated = await taskManager.updateTask(task.id, { description: 'Updated Description' });
       
-      expect(updated.description).toBe('Updated Description');
+      expect(updated!.description).toBe('Updated Description');
     });
 
     test('should update task completed status', async () => {
       const task = await taskManager.createTask('Task');
       const updated = await taskManager.updateTask(task.id, { completed: true });
       
-      expect(updated.completed).toBe(true);
+      expect(updated!.completed).toBe(true);
     });
 
     test('should update multiple fields at once', async () => {
@@ -118,17 +117,17 @@ describe('TaskManager', () => {
         completed: true
       });
       
-      expect(updated.title).toBe('New Title');
-      expect(updated.description).toBe('New Description');
-      expect(updated.completed).toBe(true);
+      expect(updated!.title).toBe('New Title');
+      expect(updated!.description).toBe('New Description');
+      expect(updated!.completed).toBe(true);
     });
 
     test('should not allow changing task ID', async () => {
       const task = await taskManager.createTask('Task');
       const originalId = task.id;
-      const updated = await taskManager.updateTask(task.id, { id: 'different-id' });
+      const updated = await taskManager.updateTask(task.id, { id: 'different-id' } as any);
       
-      expect(updated.id).toBe(originalId);
+      expect(updated!.id).toBe(originalId);
     });
 
     test('should return null when updating non-existent task', async () => {
